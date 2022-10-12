@@ -279,7 +279,7 @@ public class UserInfoController {
             e.printStackTrace();
 
         } finally {
-            log.info(this.getClass().getName() + ".insertUserInfo end!");
+            log.info(this.getClass().getName() + ".getUserLoginCheck end!");
 
             /* 로그인 처리 결과를 jsp에 전달하기 위해 변수 사용
              * 숫자 유형의 데이터 타입은 값을 전달하고 받는데 불편함이  있어
