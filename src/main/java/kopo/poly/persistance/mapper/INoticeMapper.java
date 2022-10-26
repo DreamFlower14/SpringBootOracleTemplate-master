@@ -6,7 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface INoticeMapper {
+public interface
+INoticeMapper {
 
 	//게시판 리스트
 	List<NoticeDTO> getNoticeList() throws Exception;
