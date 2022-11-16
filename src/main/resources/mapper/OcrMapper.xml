@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "=//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kopo.poly.persistance.mapper.IOcrMapper">
+    <insert id="insertOcrData" parameterType="OcrDTO">
+        insert into OCR_INFO
+            (
+             SEQ,
+             SAVE_FILE_NAME,
+             SAVE_FILE_PATH,
+             ORG_FILE_NAME,
+             EXT,
+             OCR_TEXT,
+             REG_ID,
+             CHG_ID,
+            )
+            VALUES
+            (
+            (SELECT NVL(MAX(A.SEQ),0)+1 FROM OCR_INFO A),
+             #{fileName},
+             #{filePath},
+             #{org_file_name},
+             #{ext},
+             #{fileFromImage},
+             #{reg_id},
+             #{chg_id},
+            )
+    </insert>
+
+</mapper>

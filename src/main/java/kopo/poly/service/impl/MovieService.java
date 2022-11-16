@@ -61,8 +61,8 @@ public class MovieService implements IMovieService {
             pDTO = new MovieDTO();
 
             // 수집 시간을 기본키로 사용
-            pDTO.setCollect_time(DateUtil.getDateTime("yyyyMMddhhmmss"));
-
+//            pDTO.setCollect_time(DateUtil.getDateTime("yyyyMMddhhmmss"));
+//
             // 영화 순위 => trim 추가 이용 : 앞 뒤 공백 제거
             // 데이터 수집시 홈페이지 개발자들을 앞뒤 공백 집어넣을 수 있어서 추가
             String rank = CmmUtil.nvl(movie_rank.next().text()).trim(); // NO.1 들어옴
