@@ -57,9 +57,12 @@ public class PapagoService implements IPapagoService {
         // 키와 값 구조의 JSON 구조로부터 데이터를 쉽게 가져오기 위해 Map 데이터구조로 변경함
         PapagoDTO rDTO = new ObjectMapper().readValue(json, PapagoDTO.class);
 
+        String LangCode = rDTO.getLangCode();
+        log.info("LangCode : " + LangCode);
+
         // 언어 감지를 위한 원문 저장하기
         rDTO.setText(text);
-        rDTO.se;
+        rDTO.setLangCode(LangCode);
 
         log.info(this.getClass().getName() + "detectLangs 끝!!");
 
@@ -76,8 +79,6 @@ public class PapagoService implements IPapagoService {
 
         // 찾은 언어 종류
         String langcode = CmmUtil.nvl(rDTO.getLangCode());
-
-
 
         String source = ""; // 원문 언어
         String target = ""; // 번역할 언어
