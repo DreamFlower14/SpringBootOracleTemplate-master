@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Slf4j
@@ -97,8 +98,47 @@ public class PapagoService implements IPapagoService {
 
         rDTO = null; // 사용 용도가 끝나서 메모리에서 지우기
 
+        String text = CmmUtil.nvl(pDTO.getText());
+
+        // 언어를 번역하기 위한 파라미터 설정
+        String postParams = "source=" + source + "&target=" + target + "&text=" + URLEncoder.encode(text, "UTF-8");
+
+        log.info("postParams : " + postParams);
+
+        // PapagoAPI 호출하기
+        String json = NetworkUtil.post(IPapagoService.translateApiURL, this.setNaverInfo(), postParams);
+
+        log.info("json : " + json);
+
+        Map<String, Object> rMap = new ObjectMapper().readValue(json, LinkedHashMap.class);
+
+        // 결과 내용 중 message 정보 가져오기
+        Map<String, Object> messageMap = (Map<String, Object>) rMap.get("message");
+
+        // 결과 내용 중 result 정보 가져오기
+        Map<String, String> resultMap = (Map<String, String>) messageMap.get("result");
+
+        log.info("resultMap : " + resultMap);
+
+        String srcLangType = CmmUtil.nvl(resultMap.get("srcLangType"));
+        String tarLangType = CmmUtil.nvl(resultMap.get("tarLangType"));
+        String translatedText = CmmUtil.nvl(resultMap.get("translatedText"));
+
+        log.info("srcLangType : " + srcLangType);
+        log.info("tarLangType : " + tarLangType);
+        log.info("translatedText : " + translatedText);
+
+        rDTO = new PapagoDTO();
+        rDTO.setText(text);
+        rDTO.setTranslatedText(translatedText);
+        rDTO.setScrLangType(srcLangType);
+        rDTO.setTarLangType(tarLangType);
+
+        resultMap = null;
+        messageMap = null;
+        rMap = null;
 
         log.info(this.getClass().getName() + ".translate Start!");
-        return null;
+        return rDTO;
     }
 }
